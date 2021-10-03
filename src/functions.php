@@ -20,7 +20,7 @@ function task1()
     foreach ($xml->Address as $address) {
         echo "<tr>";
         echo "<td>" . $address->Name . "</td>";
-        echo "<td>" . $address->Street . ", " . $address->City . ", " . $address->State. ", ". $address->Zip . ", " . $address->Country . "</td>";
+        echo "<td>" . $address->Street . ", " . $address->City . ", " . $address->State . ", " . $address->Zip . ", " . $address->Country . "</td>";
         echo "</tr>";
     }
     echo "</table>";
@@ -50,3 +50,80 @@ function task1()
     }
     echo "</table>";
 }
+
+function task2()
+{
+
+    function difference($arr1, $arr2)
+    {
+        if (count($arr1) != count($arr2)) {
+            return "Размеры массивов не равны, сравнение невозможно";
+        }
+        $outDiff = [];
+        for ($i = 0; $i < count($arr1); $i++) {
+            $diff = array_diff($arr1[$i], $arr2[$i]);
+            if(!empty($diff)) {
+                array_push($outDiff, ['key' => $i,$diff]);
+            }
+        }
+        return $outDiff;
+    }
+
+    function randChangeData($arr)
+    {
+        if (rand(0, 1)) {
+            $tmp = $arr[rand(0, 2)]["name"];
+            $arr[rand(0, 2)]["name"] = $tmp;
+        }
+        return $arr;
+    }
+
+    function createF($path, $inputData)
+    {
+        $fd = fopen($path, 'w') or die("<h1>не удалось открыть файл</h1>");
+        fwrite($fd, $inputData);
+        fclose($fd);
+    }
+
+    function readF($path)
+    {
+        $fd = fopen($path, 'r') or die("не удалось открыть файл");
+        while (!feof($fd)) {
+            $str = fgets($fd);
+            echo $str . "<br /><br />";
+        }
+        fclose($fd);
+    }
+
+    $arr = [
+        [
+            'name' => 'Александр',
+            'age' => 32,
+            'job' => 'Программист'
+        ],
+        [
+            'name' => 'Анастасия',
+            'age' => 33,
+            'job' => 'Визажист'
+        ],
+        [
+            'name' => 'Иван',
+            'age' => 29,
+            'job' => 'Лесоруб'
+        ]
+    ];
+
+    createF("output.json", json_encode($arr));
+    readF("output.json");
+
+    $arr2 = randChangeData($arr);
+    createF("output2.json", json_encode($arr2));
+    readF("output.json");
+
+    var_dump($arr);
+    var_dump($arr2);
+
+    var_dump(difference($arr, $arr2));
+}
+
+
