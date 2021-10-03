@@ -130,7 +130,7 @@ function task3()
 {
     $arr = [];
     for ($i = 0; $i < 50; $i++) {
-        array_push($arr, rand(1,100));
+        array_push($arr, rand(1, 100));
     }
     $fp = fopen("output3.csv", "w");
     fputcsv($fp, $arr, ";", "/");
@@ -138,8 +138,8 @@ function task3()
     var_dump($arr);
 
 
-    if (($fp = fopen("output3.csv", "r")) !== FALSE) {
-        while (($data = fgetcsv($fp, 0, ";")) !== FALSE) {
+    if (($fp = fopen("output3.csv", "r")) !== false) {
+        while (($data = fgetcsv($fp, 0, ";")) !== false) {
             $list[] = $data;
         }
         fclose($fp);
@@ -154,4 +154,14 @@ function task3()
     }
 }
 
+function task4()
+{
+    $info = file_get_contents("https://en.wikipedia.org/w/api.php?action=query&titles=Main%20Page&prop=revisions&rvprop=content&format=json");
+    $res = json_decode($info, true);
+    foreach ($res["query"]["pages"] as $page) {
+        var_dump($page["pageid"]);
+        var_dump($page["title"]);
+    }
+//    var_dump($res);
+}
 
