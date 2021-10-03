@@ -8,5 +8,5 @@
 require("src/functions.php");
 
 //task1();
-task2();
-
+//task2();
+task3();

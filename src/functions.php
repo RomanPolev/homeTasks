@@ -62,8 +62,8 @@ function task2()
         $outDiff = [];
         for ($i = 0; $i < count($arr1); $i++) {
             $diff = array_diff($arr1[$i], $arr2[$i]);
-            if(!empty($diff)) {
-                array_push($outDiff, ['key' => $i,$diff]);
+            if (!empty($diff)) {
+                array_push($outDiff, ['key' => $i, $diff]);
             }
         }
         return $outDiff;
@@ -124,6 +124,34 @@ function task2()
     var_dump($arr2);
 
     var_dump(difference($arr, $arr2));
+}
+
+function task3()
+{
+    $arr = [];
+    for ($i = 0; $i < 50; $i++) {
+        array_push($arr, rand(1,100));
+    }
+    $fp = fopen("output3.csv", "w");
+    fputcsv($fp, $arr, ";", "/");
+    fclose($fp);
+    var_dump($arr);
+
+
+    if (($fp = fopen("output3.csv", "r")) !== FALSE) {
+        while (($data = fgetcsv($fp, 0, ";")) !== FALSE) {
+            $list[] = $data;
+        }
+        fclose($fp);
+        $sum = 0;
+        foreach ($list[0] as $key => $value) {
+            if ($key % 2 == 0) {
+                $sum += $value;
+            }
+        }
+        var_dump($list);
+        echo "<h1>${sum}</h1>";
+    }
 }
 
 
