@@ -133,23 +133,26 @@ function task3()
         array_push($arr, rand(1, 100));
     }
     $fp = fopen("output3.csv", "w");
-    fputcsv($fp, $arr, ";", "/");
+    fputcsv($fp, $arr, "\n", "/");
     fclose($fp);
-    var_dump($arr);
 
+    #-----------------НАЧАЛО ОТЛАДКИ-----------------#
+    echo "<pre>";
+    print_r($arr);
+    echo "<pre>";
+    #-----------------КОНЕЦ ОТЛАДКИ-----------------#
 
     if (($fp = fopen("output3.csv", "r")) !== false) {
-        while (($data = fgetcsv($fp, 0, ";")) !== false) {
-            $list[] = $data;
+        $i = 0;
+        $sum = 0;
+        while (($data = fgetcsv($fp, 0, "\n")) !== false) {
+            if($i % 2 == 0) {
+                $sum += (int) $data[0];
+            }
+            $i++;
         }
         fclose($fp);
-        $sum = 0;
-        foreach ($list[0] as $key => $value) {
-            if ($key % 2 == 0) {
-                $sum += $value;
-            }
-        }
-        var_dump($list);
+
         echo "<h1>${sum}</h1>";
     }
 }
