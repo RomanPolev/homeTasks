@@ -4,7 +4,7 @@
 $link = mysqli_connect("db", "bitrix", "123", "bitrix");
 
 // Обработка ошибки подключения
-if ($link == false) {
+if (!$link) {
     print("Ошибка: Невозможно подключиться к MySQL " . mysqli_connect_error());
 }
 
@@ -48,7 +48,8 @@ if ($result) {  // Если нашли, инкрементируем счётч�
 $order_id = mysqli_fetch_assoc(mysqli_query($link, "SELECT MAX(id) FROM orders"))["MAX(id)"];
 
 // Получение значения счётчика заказов
-$count = mysqli_fetch_assoc(mysqli_query($link, "SELECT order_count FROM users WHERE email = \"$attributes[email]\""))["order_count"];
+$count = mysqli_fetch_assoc(mysqli_query($link,
+    "SELECT order_count FROM users WHERE email = \"$attributes[email]\""))["order_count"];
 
 $file = "../mail/mails.txt";
 $current = file_get_contents($file);
